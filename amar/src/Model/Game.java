@@ -12,7 +12,7 @@ public class Game implements buttonInterface {
 	private Hand playerHand=new Hand();
 	private Hand dealerHand=new Hand();
 	private int deckIndex = 0;
-	private int flag;
+	private int flag=0;
 	
 	public void shuffle(Deck deck) {
 		Random rnd = new Random();
@@ -60,6 +60,7 @@ public class Game implements buttonInterface {
 	public String[] createDealLogic() {
 		playerHand=new Hand();
 		dealerHand=new Hand();
+		flag=0;
 		shuffle(this.deck);
 		String cards[] = new String[4];
 		int i;
@@ -163,6 +164,13 @@ public class Game implements buttonInterface {
 	 */
 	public void setDealerHand(Hand dealerHand) {
 		this.dealerHand = dealerHand;
+	}
+	public void setdeckIndex(int x)
+	{ 
+		if(x>=0)
+			if(x<52)
+		this.deckIndex=x;
+			else x=0;
 	}
 
 }
