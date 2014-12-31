@@ -7,7 +7,7 @@ import java.util.Random;
 public class Game implements buttonInterface {
 
 	private int score;
-	private int round;
+	private static int round=0;
 	private Deck deck = new Deck();
 	private Hand playerHand=new Hand();
 	private Hand dealerHand=new Hand();
@@ -59,6 +59,7 @@ public class Game implements buttonInterface {
 
 	public String[] createDealLogic() {
 		playerHand=new Hand();
+		
 		dealerHand=new Hand();
 		flag=0;
 		shuffle(this.deck);
@@ -69,15 +70,16 @@ public class Game implements buttonInterface {
 			playerHand.setCards(cards[i]);
 			int x= Integer.parseInt(deck.getDeck().get(deckIndex).replaceAll("[\\D]", ""));
 			updateHandPlayer(x);
-			deckIndex++;
+			setdeckIndex(deckIndex+1);
 		}
 		for (i = 2; i < 4; ++i) {
 			cards[i]=deck.getDeck().get(deckIndex);
 			dealerHand.setCards(cards[i]);
 			int x= Integer.parseInt(deck.getDeck().get(deckIndex).replaceAll("[\\D]", ""));
 			updateHandDealer(x);
-			deckIndex++;
+			setdeckIndex(deckIndex+1);
 		}
+		setRound(round+1);
 		return cards;
 
 	}
@@ -88,7 +90,7 @@ public class Game implements buttonInterface {
 		int x= Integer.parseInt(deck.getDeck().get(deckIndex).replaceAll("[\\D]", ""));
 		updateHandPlayer(x);
 		playerHand.setCards(card);
-		deckIndex++;
+		setdeckIndex(deckIndex+1);
      return card;
 	}
 
@@ -101,7 +103,7 @@ public class Game implements buttonInterface {
 			String card=deck.getDeck().get(deckIndex);
 			cards.add(card);
 			dealerHand.setCards(card);
-			deckIndex++;
+			setdeckIndex(deckIndex+1);
 		}
 	}
 
