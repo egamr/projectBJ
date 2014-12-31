@@ -6,14 +6,18 @@ import java.util.Random;
 
 public class Game implements buttonInterface {
 
-	private int score;
+	private int score=100;
 	private static int round=0;
 	private Deck deck = new Deck();
 	private Hand playerHand=new Hand();
 	private Hand dealerHand=new Hand();
 	private int deckIndex = 0;
 	private int flag=0;
+	private int value;
 	
+	public Game(int value){
+		this.value = value;
+	}
 	public void shuffle(Deck deck) {
 		Random rnd = new Random();
 		for (int i = deck.getDeck().size() - 1; i > 0; i--) {
@@ -167,6 +171,7 @@ public class Game implements buttonInterface {
 	public void setDealerHand(Hand dealerHand) {
 		this.dealerHand = dealerHand;
 	}
+	
 	public void setdeckIndex(int x)
 	{ 
 		if(x>=0)
@@ -174,5 +179,30 @@ public class Game implements buttonInterface {
 		this.deckIndex=x;
 			else x=0;
 	}
-
+	
+	public void calculateScore(String winner){
+		if(round%2==0){
+			if(winner == "p"){
+				setScore(value*3);
+			}
+			else{
+				if(winner == "d"){
+					setScore(-value*3);
+				}
+			}
+		}
+		else{
+			if(round%2==1){
+				if(winner == "p"){
+					setScore(value*2);
+				}
+				else{
+					if(winner == "d"){
+						setScore(-value*2);
+					}
+				}
+			}
+		}
+	}
+	
 }
