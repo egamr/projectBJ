@@ -15,9 +15,6 @@ public class Game implements buttonInterface {
 	private int flag=0;
 	private int value;
 	
-	public Game(int value){
-		this.value = value;
-	}
 	public void shuffle(Deck deck) {
 		Random rnd = new Random();
 		for (int i = deck.getDeck().size() - 1; i > 0; i--) {
@@ -180,6 +177,20 @@ public class Game implements buttonInterface {
 			else x=0;
 	}
 	
+	/**
+	 * @return the value
+	 */
+	protected int getValue() {
+		return value;
+	}
+
+	/**
+	 * @param value the value to set
+	 */
+	protected void setValue(int value) {
+		this.value = value;
+	}
+
 	public void calculateScore(String winner){
 		if(round%2==0){
 			if(winner == "p"){
