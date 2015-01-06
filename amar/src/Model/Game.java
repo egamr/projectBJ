@@ -7,6 +7,7 @@ import java.util.Random;
 public class Game implements buttonInterface {
 
 	private int score=100;
+
 	private static int round=0;
 	private Deck deck = new Deck();
 	private Hand playerHand=new Hand();
@@ -59,6 +60,7 @@ public class Game implements buttonInterface {
 		}
 
 	public String[] createDealLogic() {
+		deckIndex = 0;
 		playerHand=new Hand();
 		
 		dealerHand=new Hand();
@@ -120,8 +122,8 @@ public class Game implements buttonInterface {
 		return round;
 	}
 
-	public void setRound(int round) {
-		this.round = round;
+	public void setRound(int Round) {
+		round = Round;
 	}
 
 	/**
@@ -190,30 +192,30 @@ public class Game implements buttonInterface {
 	public void setValue(int value) {
 		this.value = value;
 	}
-
+	
 	public void calculateScore(String winner){
+		
 		if(round%2==0){
-			if(winner == "p"){
-				setScore(value*3);
+			if(winner == "d"){
+				setScore(-value*3);
 			}
 			else{
-				if(winner == "d"){
-					setScore(-value*3);
+				if(winner == "p"){
+					setScore(value*3);
 				}
 			}
 		}
 		else{
 			if(round%2==1){
-				if(winner == "p"){
-					setScore(value*2);
+				if(winner == "d"){
+					setScore(-value*2);
 				}
 				else{
-					if(winner == "d"){
-						setScore(-value*2);
+					if(winner == "p"){
+						setScore(value*2);
 					}
 				}
 			}
 		}
 	}
-	
 }

@@ -37,11 +37,20 @@ public class Thing extends PApplet {
 	Game game = new Game();
 	Hand hand = new Hand();
 	Hand dhand = new Hand();
-	Label labe=new Label("Round:");
-	
+	Label labe = new Label("Round:");
+	// Button score = new Button();
+	int value;
+	boolean loop = true, loop1 = true;
+	String stround;
+	String stscore = "";
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+
 	public void setup() {
-		 Button score = new Button("Score:   "+game.getScore());  
-		 Button round=new Button("Round:   "+game.getRound());
+
+		game = new Game();
 		labe.setBounds(10, 32, 46, 14);
 		size(600, 600);
 		f = x = x1 = 440;
@@ -57,7 +66,7 @@ public class Thing extends PApplet {
 		pcards[1] = cards[1];
 		dcards[0] = cards[2];
 		dcards[1] = cards[3];
-      
+
 		background = loadImage(getimg("Table.png"));
 		background.resize(600, 600);
 
@@ -87,35 +96,77 @@ public class Thing extends PApplet {
 
 		deck5 = loadImage(getimg("deck.jpg"));
 		deck5.resize(80, 120);
+		game.setValue(value);
+		stround = "" + game.getRound();
+
+		stscore = "" + game.getScore();
 
 	}
 
 	public void draw() {
+	
 
-		
-		round.setLocation(500,50);
-		 round.setBounds(500, 50,80, 50);
-		round.setVisible(true);
-		 Color red=new Color(250,0,0);
-		Color d=new Color(0,250,0);
-		round.setBackground(red);
-//this.add(labe);
-		
-		
-		
+		if (loop1 == false) {
+			noLoop();
+			reset();
+
+			if (game.getScore() > 100)
+				background = loadImage(getimg("win.gif"));
+			else
+				background = loadImage(getimg("sad.jpg"));
+			background.resize(600, 600);
+
+			redraw();
+		}
+
 		background(background);
+		image(deck2, 440, 280);
+
 		Button deal = new Button("DEAL");
 		Button hit = new Button("HIT");
 		Button stand = new Button("STAND");
-		 score.setLocation(500, 100);
-		 score.setBounds(500, 100, 100, 50);
-		 score.setVisible(true);
-		 this.add(score);
-		deal.setLocation(400, 500);
-		deal.setBounds(400, 500, 100, 50);
-		deal.setVisible(true);
-		score.setBackground(d);
-		 this.add(round);
+		// Button round = new Button("Round:  " + stround);
+
+		if (loop) {
+
+			// Color red = new Color(250, 0, 0);
+			// Color d = new Color(0, 250, 0);
+
+			// score = new Button("Score: " + stscore);
+			// score.setName(("Score:   " + stscore));
+			// score.setLocation(500, 100);
+			// score.setBounds(500, 100, 100, 50);
+			// score.setVisible(true);
+			// this.add(score);
+			// score.setBackground(d);
+
+			// round.setLocation(500, 50);
+			// round.setBounds(500, 50, 80, 50);
+			// round.setVisible(true);
+			// round.setBackground(red);
+			// this.add(round);
+
+			deal.setLocation(400, 500);
+			deal.setBounds(400, 500, 100, 50);
+			deal.setVisible(true);
+			this.add(deal);
+
+			stand.setLocation(400, 500);
+			stand.setBounds(300, 500, 100, 50);
+			stand.setVisible(true);
+			this.add(stand);
+
+			hit.setLocation(400, 500);
+			hit.setBounds(200, 500, 100, 50);
+			hit.setVisible(true);
+			this.add(hit);
+
+			loop = false;
+		}
+	
+		// /////////////////////////////////////////
+		// /////////////////////////////////////////
+		// /////////////////////////////////////////
 
 		/*
 		 * Deal button oop singleton :D we want the deal button to act one time
@@ -124,10 +175,20 @@ public class Thing extends PApplet {
 		deal.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+			
+				if (loop1 == false) {
+					JOptionPane
+							.showMessageDialog(null,
+									"you quit the game ! please start a new game if you want to play again");
+					return;
+				}
+				stround = "" + game.getRound();
+				stscore = "" + game.getScore();
+				loop = true;
 				if (flag == 0) {
 					flag = 1;
 					check = 0;
-					
+
 				} else if ((flag1 == 0) && (flag2 == 0))
 					return;
 				else {
@@ -137,16 +198,16 @@ public class Thing extends PApplet {
 				}
 
 				checkdeal();
-			
+				if (check == 1)
+					showscore();
 
-		}
+			}
 		});
 
-		this.add(deal);
+		// /////////////////////////////////////////
+		// /////////////////////////////////////////
+		// /////////////////////////////////////////
 
-		hit.setLocation(400, 500);
-		hit.setBounds(200, 500, 100, 50);
-		hit.setVisible(true);
 		/*
 		 * HIT Button we claimed that the player will have no more than 4 cards
 		 * in his hand before he exceed the 21 and we added the flags from the
@@ -156,6 +217,12 @@ public class Thing extends PApplet {
 		hit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (loop1 == false) {
+					JOptionPane
+							.showMessageDialog(null,
+									"you quit the game ! please start a new game if you want to play again");
+					return;
+				}
 				if (game.getPlayerHand().getSum() > 21)
 					return;
 
@@ -185,11 +252,15 @@ public class Thing extends PApplet {
 					pcard6.resize(80, 120);
 					checkhit();
 				}
+				if (check == 1)
+					showscore();
 			}
 		});
-		stand.setLocation(400, 500);
-		stand.setBounds(300, 500, 100, 50);
-		stand.setVisible(true);
+
+		// /////////////////////////////////////////
+		// /////////////////////////////////////////
+		// /////////////////////////////////////////
+
 		/**
 		 * Stand button function call the stand function and check how many
 		 * cards the dealer have and fill the cards
@@ -200,6 +271,12 @@ public class Thing extends PApplet {
 		stand.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (loop1 == false) {
+					JOptionPane
+							.showMessageDialog(null,
+									"you quit the game ! please start a new game if you want to play again");
+					return;
+				}
 				if (flag == 0)
 					return;
 
@@ -215,7 +292,7 @@ public class Thing extends PApplet {
 					dealercards = dealerhand.getCards();
 					if (dealercards.size() == 2) {
 						checkstand();
-						flag2=2;
+						flag2 = 2;
 
 					}
 					if (dealercards.size() == 3) {
@@ -250,24 +327,22 @@ public class Thing extends PApplet {
 						checkstand();
 					}
 				}
+				if (check == 1)
+					showscore();
 
 			}
 		});
-		this.add(stand);
 
-		if (flag == 1) {
-			this.remove(deal);
-		}
-		this.add(hit);
-
-		image(deck2, 440, 280);
+		// /////////////////////////////////////////
+		// /////////////////////////////////////////
+		// /////////////////////////////////////////
 
 		if (flag == 1) {
 
 			x = x - xspeed;
-
 			if (x <= 140)
 				xspeed = 0;
+
 			image(deck, x, 280);
 
 			if (x == 140) {
@@ -277,6 +352,7 @@ public class Thing extends PApplet {
 
 			y = y + yspeed;
 			z = z - zspeed;
+
 			if (y <= 100)
 				yspeed = 0;
 			if (z <= 250)
@@ -289,11 +365,16 @@ public class Thing extends PApplet {
 			}
 		}
 
+		// /////////////////////////////////////////
+		// /////////////////////////////////////////
+		// /////////////////////////////////////////
+
 		if (flag1 == 1) {
 			x1 = x1 - x1speed;
 
 			if (x1 <= 140)
 				x1speed = 0;
+
 			image(deck, x1, 280);
 
 			if (x1 == 140) {
@@ -303,23 +384,28 @@ public class Thing extends PApplet {
 				image(pcard5, x1 + 36, 280);
 			}
 		}
+
 		if (flag1 == 2) {
-
 			f = f - x2speed;
-
 			if (f <= 140)
 				x2speed = 0;
-			image(deck5, f, 280);
-			if (x1 == 140) {
 
+			image(deck5, f, 280);
+
+			if (x1 == 140) {
 				image(pcard1, x, 280);
 				image(pcard2, x + 18, 280);
 				image(pcard5, x1 + 36, 280);
 			}
-			if (f == 140) {
+
+			if (f == 140)
 				image(pcard6, x1 + 54, 280);
-			}
+
 		}
+
+		// /////////////////////////////////////////
+		// /////////////////////////////////////////
+		// /////////////////////////////////////////
 
 		if (flag2 == 1) {
 			image(dcard1, 250, y);
@@ -358,22 +444,20 @@ public class Thing extends PApplet {
 
 	}
 
+	// /////////////////////////////////////////
+	// /////////////////////////////////////////
+	// /////////////////////////////////////////
 	public String getimg(String x) {
 
 		URL imgUrl = getClass().getClassLoader().getResource("pics/" + x);
 		ImageIcon icon = new ImageIcon(imgUrl);
 
 		return icon.toString();
-		/*
-		 * URL imgUrl =
-		 * getClass().getClassLoader().getResource("pics/"+"Table.png");
-		 * ImageIcon icon = new ImageIcon(imgUrl); background =
-		 * loadImage(icon.toString());
-		 */
 
 	}
 
 	public void reset() {
+
 		runs++;
 		flag = flag1 = flag2 = 0;
 		numcards = 0;
@@ -382,9 +466,9 @@ public class Thing extends PApplet {
 		z = z1 = 440;
 		w = w1 = 60;
 		h = h1 = 60;
-		xspeed = x1speed = x2speed = 6;
-		yspeed = -6;
-		zspeed = 6;
+		xspeed = x1speed = x2speed = 3;
+		yspeed = -3;
+		zspeed = 3;
 
 		cards = (game.createDealLogic());
 		pcards[0] = cards[0];
@@ -420,6 +504,10 @@ public class Thing extends PApplet {
 
 	}
 
+	// /////////////////////////////////////////
+	// /////////////////////////////////////////
+	// /////////////////////////////////////////
+
 	public void checkdeal() {
 		delay(1000);
 		if (game.getPlayerHand().getSum() == 21) {
@@ -428,8 +516,11 @@ public class Thing extends PApplet {
 			else {
 				JOptionPane.showMessageDialog(null,
 						"**BlackJack** \n   You win!");
-					game.calculateScore("p");
-			
+				game.setValue(game.getPlayerHand().getSum());
+
+				game.calculateScore("p");
+				// showscore();
+
 				check = 1;
 				flag2 = 2;
 
@@ -444,7 +535,10 @@ public class Thing extends PApplet {
 			else {
 				JOptionPane.showMessageDialog(null,
 						"**BlackJack** \n   Delaer win!");
+				game.setValue(game.getPlayerHand().getSum());
+
 				game.calculateScore("d");
+				// showscore();
 				check = 1;
 				flag2 = 2;
 
@@ -454,6 +548,9 @@ public class Thing extends PApplet {
 
 	}
 
+	// /////////////////////////////////////////
+	// /////////////////////////////////////////
+	// /////////////////////////////////////////
 	public void checkhit() {
 
 		delay(1000);
@@ -463,7 +560,10 @@ public class Thing extends PApplet {
 			else {
 				JOptionPane.showMessageDialog(null,
 						"**BlackJack** \n   You win!");
+				game.setValue(game.getPlayerHand().getSum());
+
 				game.calculateScore("p");
+				// showscore();
 				check = 1;
 				flag2 = 2;
 
@@ -478,7 +578,10 @@ public class Thing extends PApplet {
 
 				JOptionPane.showMessageDialog(null,
 						"**Busted** \n   You Loose!");
+				game.setValue(game.getPlayerHand().getSum());
+
 				game.calculateScore("d");
+				// showscore();
 				check = 1;
 				flag2 = 2;
 
@@ -488,6 +591,9 @@ public class Thing extends PApplet {
 
 	}
 
+	// /////////////////////////////////////////
+	// /////////////////////////////////////////
+	// /////////////////////////////////////////
 	public void checkstand() {
 		delay(500);
 
@@ -498,7 +604,10 @@ public class Thing extends PApplet {
 
 				JOptionPane.showMessageDialog(null,
 						"**Dealer Busted** \n   You win!");
+				game.setValue(game.getPlayerHand().getSum());
+
 				game.calculateScore("p");
+				// showscore();
 				check = 1;
 
 				return;
@@ -513,7 +622,10 @@ public class Thing extends PApplet {
 
 				JOptionPane.showMessageDialog(null,
 						"**Bad luck** \n   Delaer win!");
+				game.setValue(game.getPlayerHand().getSum());
+
 				game.calculateScore("d");
+				// showscore();
 				check = 1;
 
 				return;
@@ -526,7 +638,10 @@ public class Thing extends PApplet {
 			else {
 				JOptionPane.showMessageDialog(null,
 						"**congratulations** \n   you win!");
+				game.setValue(game.getPlayerHand().getSum());
+
 				game.calculateScore("p");
+				// showscore();
 				check = 1;
 
 				return;
@@ -539,7 +654,10 @@ public class Thing extends PApplet {
 			else {
 				JOptionPane.showMessageDialog(null,
 						"**unlucky** \n  ! ! Draw The dealer win !!");
+				game.setValue(game.getPlayerHand().getSum());
+
 				game.calculateScore("d");
+				// showscore();
 				check = 1;
 
 				return;
@@ -551,13 +669,42 @@ public class Thing extends PApplet {
 			else {
 				JOptionPane.showMessageDialog(null,
 						"**BlackJack** \n   Delaer win!");
+				game.setValue(game.getPlayerHand().getSum());
+
 				game.calculateScore("d");
+				// showscore();
 				check = 1;
-				
 
 				return;
 			}
 		}
+
+	}
+
+	private void showscore() {
+
+		String winmessage = "Congratulations you win : "
+				+ (game.getScore() - 100 + " $");
+		String losemessage = "Ooooh you just lost :"
+				+ (100 - game.getScore() + " $");
+		String message = "your score is : " + game.getScore() + "\n "
+				+ "next round is round number : " + (game.getRound() + 1)
+				+ " continue?";
+
+		String title = "Continue Playing?";
+
+		int reply = JOptionPane.showConfirmDialog(null, message, title,
+				JOptionPane.YES_NO_OPTION);
+		if (reply == JOptionPane.NO_OPTION) {
+			if (game.getScore() >= 100)
+				JOptionPane.showMessageDialog(null, "Thank you for playing \n"
+						+ winmessage);
+			else
+				JOptionPane.showMessageDialog(null, "Thank you for playing \n"
+						+ losemessage);
+			loop1 = false;
+		} else
+			reset();
 
 	}
 
