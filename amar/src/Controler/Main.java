@@ -13,12 +13,11 @@ import Gui.Thing;
 import java.awt.Color;
 import java.awt.Font;
 
-public class Home extends JFrame {
+public class Main extends JFrame {
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int value=0;
 	private JPanel contentPane;
 	private JPanel panel;
 	private Thing game;
@@ -26,6 +25,8 @@ public class Home extends JFrame {
 	private JMenu mnOptions;
 	private JMenuItem mntmNewgame;
 	private JMenuItem mntmExit;
+	private JMenuItem mntmHelp;
+	private JMenu mnHelop;
 	/*
 	 * Launch the application.
 	 */
@@ -33,7 +34,7 @@ public class Home extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Home frame = new Home();
+					Main frame = new Main();
 					frame.setVisible(true);
 					frame.setResizable(false);
 				} catch (Exception e) {
@@ -46,7 +47,7 @@ public class Home extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Home() {
+	public Main() {
 		setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		setTitle("BlackJack Game");
 		setBackground(new Color(0, 128, 0));
@@ -135,9 +136,38 @@ public class Home extends JFrame {
 		{
 			@Override
 			public void mousePressed(MouseEvent e) {
+				int reply = JOptionPane.showConfirmDialog(null, "are you sure you want to Exit?", "Exit?",
+						JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.NO_OPTION) {
+					return; //do nothing
+				}else
+				{
+				
 				dispose();//clos the window
-			}
+			}}
 		});
 		mnOptions.add(mntmExit);
+		
+		mnHelop = new JMenu("Help");
+		mnHelop.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
+		mnHelop.setForeground(new Color(0, 128, 0));
+		menuBar.add(mnHelop);
+		
+		mntmHelp = new JMenuItem("Help");
+		mnHelop.add(mntmHelp);
+		mntmHelp.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				String help="Welcome tho our game \n "
+						+ "in this game you will compete against the dealer and try to beat him and win"+
+			  "\n every round you will take 2 cards and your goal is to has sum of 21 \n"
+			  + "if you had less than 21 you should had more than the dealer hand to win\n if you want more cards you can press the hit button\n"
+			  + "if you confused with the sum you have you click the stand and then \nthe dealer will take cards until he had 17 or more then every one show his cards\n and one player win"
+			  + "if the round is odd you will win/lose double of the value of your cards if its not you will get trible !\n press deal to begin new round \n Good luck   " ;
+				JOptionPane.showMessageDialog(null, help);
+			}
+		});
+		mntmHelp.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
 	}
 }
+
