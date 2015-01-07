@@ -49,24 +49,23 @@ public class tests {
 	}
 	@Test
 	public void testCalculateScore() {
-		int newscore;
+			int newscore;
 		game.setRound(0);
 		game.setValue(23);
 		game.setScore(0);
 	    newscore= game.getScore()- 3*(game.getValue());
 		game.calculateScore("d");
 		assert(game.getScore() == newscore );
-		game.calculateScore("d");
 		newscore= game.getScore()+ 3*(game.getValue());
+		game.calculateScore("p");
 		assert(game.getScore() == newscore );
 		//*********//
 		game.setRound(1);
 	    newscore= game.getScore()- 2*(game.getValue());
-		game.calculateScore("p");
+		game.calculateScore("d");
 		assert(game.getScore() == newscore );
-		assert(game.getScore() == newscore );
-		game.calculateScore("p");
 		newscore= game.getScore()+ 2*(game.getValue());
+		game.calculateScore("p");
 		assert(game.getScore() == newscore );
 		
 	
