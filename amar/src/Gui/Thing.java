@@ -34,7 +34,8 @@ public class Thing extends PApplet {
 	Hand dhand = new Hand();
 
 	int value;
-	boolean loop = true, loop1 = true;
+	boolean loop = true;
+	public boolean loop1 = true;
 
 	AudioClip win;
 
