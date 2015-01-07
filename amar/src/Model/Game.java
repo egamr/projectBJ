@@ -12,7 +12,7 @@ public class Game implements buttonInterface {
 	/**
 	 * Game's round counter
 	 */
-	private static int round=0;
+	private int round=0;
 	/**
 	 * Deck
 	 */
