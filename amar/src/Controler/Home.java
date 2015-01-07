@@ -62,10 +62,9 @@ public class Home extends JFrame {
 		panel.setBounds(0, 68, 584, 599);
 	
 	
-		game=new Thing();
-		game.setValue(value);
-		panel.add(game);
-		game.start();
+		game=new Thing();   //creat a new game
+		panel.add(game); //adding the game to the panel
+		game.start(); 
 		game.init();
 		
 		contentPane.add(panel);
@@ -86,25 +85,25 @@ public class Home extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 			 
-				if(game.loop1==true)
+				if(game.loop1==true) //if loop1=true that means that the player still playing
 				{
 				int reply = JOptionPane.showConfirmDialog(null, "are you sure you want to start a new game?", "New Game?",
 						JOptionPane.YES_NO_OPTION);
 				if (reply == JOptionPane.NO_OPTION) {
-					return;
+					return; //do nothing
 				}else
 				{
-				 	panel.remove(game);
+			        panel.remove(game);//remove the game to avoid nullpointer exceptions while creating new game
 			    	game=new Thing();
-			    
 			    	panel.add(game);
 			    	game.start();
-					game.init();
+				game.init();
 					
 				}
 				}
 				else
-				if(game==null){
+				if(game==null)//no game created yet
+				{
 				game=new Thing();	
 			
 				panel.add(game);
@@ -119,7 +118,7 @@ public class Home extends JFrame {
 			    
 			    	panel.add(game);
 			    	game.start();
-					game.init();
+				game.init();
 			    	
 			    	
 			    	
@@ -132,10 +131,11 @@ public class Home extends JFrame {
 		
 		mntmExit = new JMenuItem("Exit");
 		mntmExit.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
-		mntmExit.addMouseListener(new MouseAdapter() {
+		mntmExit.addMouseListener(new MouseAdapter()//action lestenr for the exit from the menu bar
+		{
 			@Override
 			public void mousePressed(MouseEvent e) {
-				dispose();
+				dispose();//clos the window
 			}
 		});
 		mnOptions.add(mntmExit);
