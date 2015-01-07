@@ -1,8 +1,7 @@
 package Gui;
 
+import java.applet.AudioClip;
 import java.awt.Button;
-import java.awt.Color;
-//import java.awt.Color;
 import java.awt.Image;
 import java.awt.Label;
 import java.awt.event.MouseAdapter;
@@ -10,8 +9,11 @@ import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.List;
 
+import  sun.audio.*;    
+
+import  java.io.*;
+
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import Model.*;
@@ -43,13 +45,23 @@ public class Thing extends PApplet {
 	boolean loop = true, loop1 = true;
 	String stround;
 	String stscore = "";
-
+	AudioClip win ;
+	 
 	public void setValue(int value) {
 		this.value = value;
 	}
 
+	public void init(){
+		
+		super.init();
+		win = getAudioClip(getDocumentBase(), "sounds/win.wav");
+		
+	}
+	
+	
+	
 	public void setup() {
-
+		
 		game = new Game();
 		labe.setBounds(10, 32, 46, 14);
 		size(600, 600);
@@ -105,7 +117,7 @@ public class Thing extends PApplet {
 
 	public void draw() {
 	
-
+		  
 		if (loop1 == false) {
 			noLoop();
 			reset();
@@ -457,7 +469,8 @@ public class Thing extends PApplet {
 	}
 
 	public void reset() {
-
+		  AudioClip shuffl = getAudioClip(getDocumentBase(), "sounds/shuffle.wav");
+		  shuffl.play();
 		runs++;
 		flag = flag1 = flag2 = 0;
 		numcards = 0;
@@ -517,7 +530,7 @@ public class Thing extends PApplet {
 				JOptionPane.showMessageDialog(null,
 						"**BlackJack** \n   You win!");
 				game.setValue(game.getPlayerHand().getSum());
-
+				winsound();
 				game.calculateScore("p");
 				// showscore();
 
@@ -561,7 +574,7 @@ public class Thing extends PApplet {
 				JOptionPane.showMessageDialog(null,
 						"**BlackJack** \n   You win!");
 				game.setValue(game.getPlayerHand().getSum());
-
+				winsound();
 				game.calculateScore("p");
 				// showscore();
 				check = 1;
@@ -605,7 +618,7 @@ public class Thing extends PApplet {
 				JOptionPane.showMessageDialog(null,
 						"**Dealer Busted** \n   You win!");
 				game.setValue(game.getPlayerHand().getSum());
-
+				winsound();
 				game.calculateScore("p");
 				// showscore();
 				check = 1;
@@ -639,7 +652,7 @@ public class Thing extends PApplet {
 				JOptionPane.showMessageDialog(null,
 						"**congratulations** \n   you win!");
 				game.setValue(game.getPlayerHand().getSum());
-
+				winsound();
 				game.calculateScore("p");
 				// showscore();
 				check = 1;
@@ -682,7 +695,16 @@ public class Thing extends PApplet {
 	}
 
 	private void showscore() {
-
+//////////////////////
+	
+		  
+		  AudioClip audioClip = getAudioClip(getDocumentBase(), "sounds/1.wav");
+		  audioClip.play();
+	
+		
+		
+	
+		/////////////////////////
 		String winmessage = "Congratulations you win : "
 				+ (game.getScore() - 100 + " $");
 		String losemessage = "Ooooh you just lost :"
@@ -706,6 +728,15 @@ public class Thing extends PApplet {
 		} else
 			reset();
 
+	}
+	
+	public void winsound()
+	{
+		
+		  AudioClip win = getAudioClip(getDocumentBase(), "sounds/win.wav");
+		  win.play();
+		
+		
 	}
 
 }
