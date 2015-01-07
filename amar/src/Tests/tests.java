@@ -62,10 +62,10 @@ public class tests {
 		//*********//
 		game.setRound(1);
 	    newscore= game.getScore()- 2*(game.getValue());
-		game.calculateScore("d");
+		game.calculateScore("p");
 		assert(game.getScore() == newscore );
 		assert(game.getScore() == newscore );
-		game.calculateScore("d");
+		game.calculateScore("p");
 		newscore= game.getScore()+ 2*(game.getValue());
 		assert(game.getScore() == newscore );
 		
