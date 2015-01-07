@@ -47,4 +47,29 @@ public class tests {
 		
 		assert true == (!cards.contains(card) && updatedCards.contains(card));
 	}
+	@Test
+	public void testCalculateScore() {
+		int newscore;
+		game.setRound(0);
+		game.setValue(23);
+		game.setScore(0);
+	    newscore= game.getScore()- 3*(game.getValue());
+		game.calculateScore("d");
+		assert(game.getScore() == newscore );
+		game.calculateScore("d");
+		newscore= game.getScore()+ 3*(game.getValue());
+		assert(game.getScore() == newscore );
+		//*********//
+		game.setRound(1);
+	    newscore= game.getScore()- 2*(game.getValue());
+		game.calculateScore("d");
+		assert(game.getScore() == newscore );
+		assert(game.getScore() == newscore );
+		game.calculateScore("d");
+		newscore= game.getScore()+ 2*(game.getValue());
+		assert(game.getScore() == newscore );
+		
+	
+		
+	}
 }
